@@ -233,9 +233,8 @@ const askContractToStake = () => {
             renderNotConnectedContainer()
           ) : (
             <>
-            {/* <input type = "file" className="cta-button"/><label style={{color:"white"}}>input file</label> */}
             <br/><br/><br/><br/>
-            <font className="cta-text">Name :</font>
+            {/* <font className="cta-text">Name :</font>
               <input
                 name="name"
                 className="cta-input"
@@ -250,16 +249,14 @@ const askContractToStake = () => {
                 onChange={(e) => setDescription(e.target.value)}
               /><br/><br/><br/>
             <input
-              // ref={inputFileRef} 
               className="cta-button"
-              // style={{ display: "block" }}
               type="file"
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
             <br/>
             <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
               Mint NFT
-            </button>
+            </button> */}
             </>
           )}
         </div>
