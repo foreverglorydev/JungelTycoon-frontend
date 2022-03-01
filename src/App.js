@@ -6,6 +6,8 @@ import { useWeb3React } from "@web3-react/core";
 // import twitterLogo from './assets/twitter-logo.svg';
 import { ethers } from "ethers";
 import myEpicNft from './utils/MyEpicNFT.json';
+import JungelTycoon from './utils/JungelTycoon.json';
+import Gallery from './utils/Gallery.json';
 
 // const TWITTER_HANDLE = '_buildspace';
 // const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
@@ -20,7 +22,6 @@ const App = () => {
   const [description, setDescription] = useState("");
 
   const [btnBusy, setBtnBusy] = useState(false);
-  // const { account, chainId } = useWeb3React();
 
 
   
@@ -39,7 +40,8 @@ const App = () => {
     if (accounts.length !== 0) {
       const account = accounts[0];
       console.log("Found an authorized account:", account);
-      setCurrentAccount(account)
+      setCurrentAccount(account);
+
     } else {
       console.log("No authorized account found")
     }
@@ -102,109 +104,142 @@ const App = () => {
 
     
     ////
-    const { ethereum } = window;
+                                          // const { ethereum } = window;
 
-    const CONTRACT_ADDRESS = "0xBCa44d867C707080c504F286C35b237D2802b7E5";
-    if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      console.log("=============================================");
-      console.log(signer);
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
-      
-    
+                                          // const CONTRACT_ADDRESS = "0xBCa44d867C707080c504F286C35b237D2802b7E5";
+                                          // if (ethereum) {
+                                          //   const provider = new ethers.providers.Web3Provider(ethereum);
+                                          //   const signer = provider.getSigner();
+                                          //   console.log("=============================================");
+                                          //   console.log(signer);
+                                          //   const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+                                            
+                                          
 
-      let chainId = await ethereum.request({ method: 'eth_chainId' });
-      console.log("Connected to chain " + chainId);
+                                          //   let chainId = await ethereum.request({ method: 'eth_chainId' });
+                                          //   console.log("Connected to chain " + chainId);
 
-      // String, hex code of the chainId of the Rinkebey test network
-      const rinkebyChainId = "0x4"; 
-      if (chainId !== rinkebyChainId) {
-        alert("You are not connected to the Rinkeby Test Network!");
-      }
-      ////
+                                          //   // String, hex code of the chainId of the Rinkebey test network
+                                          //   const rinkebyChainId = "0x4"; 
+                                          //   if (chainId !== rinkebyChainId) {
+                                          //     alert("You are not connected to the Rinkeby Test Network!");
+                                          //   }
+                                          //   ////
 
-      try {
-        setBtnBusy(true);
-        const metadataUrl = await IPFSupload(
-          {
-            name: name,
-            description: description
-          },
-          selectedFile
-        );
-          console.log('---------------------------------------------');
-          console.log(metadataUrl);
-          console.log(currentAccount);
+                                          //   try {
+                                          //     setBtnBusy(true);
+                                          //     const metadataUrl = await IPFSupload(
+                                          //       {
+                                          //         name: name,
+                                          //         description: description
+                                          //       },
+                                          //       selectedFile
+                                          //     );
+                                          //       console.log('---------------------------------------------');
+                                          //       console.log(metadataUrl);
+                                          //       console.log(currentAccount);
 
-        // await mintNFT(metadataUrl, "0xF6E47985bEB90bC1D24E9d1a1daAF2b316c3726E", account);
-        // toast.success("Mint Successfull !");
+                                          //     // await mintNFT(metadataUrl, "0xF6E47985bEB90bC1D24E9d1a1daAF2b316c3726E", account);
+                                          //     // toast.success("Mint Successfull !");
 
-              let nftTxn = await connectedContract.mint(1);
+                                          //           let nftTxn = await connectedContract.mint(1);
 
-              console.log("Mining...please wait.")
-              await nftTxn.wait();
-              
-              console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+                                          //           console.log("Mining...please wait.")
+                                          //           await nftTxn.wait();
+                                                    
+                                          //           console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
 
-        // reset inputs
-        setName("");
-        setDescription("");
-        setSelectedFile(null);
-      } catch (error) {
-        console.error(error);
-        // toast.error(error.message);
-        // toast.error("NFT Minting Failed");
-      } finally {
-        setBtnBusy(false);
-      }
+                                          //     // reset inputs
+                                          //     setName("");
+                                          //     setDescription("");
+                                          //     setSelectedFile(null);
+                                          //   } catch (error) {
+                                          //     console.error(error);
+                                          //     // toast.error(error.message);
+                                          //     // toast.error("NFT Minting Failed");
+                                          //   } finally {
+                                          //     setBtnBusy(false);
+                                          //   }
+                                          // }
+  const { ethereum } = window;
+  const JungelTycoon_CONTRACT_ADDRESS = "0x66E93dfE656B905941420f1E3eFc7150fE8e1f6b";
+
+  if (ethereum) {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+
+    const connectedContract = new ethers.Contract(JungelTycoon_CONTRACT_ADDRESS, JungelTycoon.abi, signer);
+    let chainId = await ethereum.request({ method: 'eth_chainId' });
+    const rinkebyChainId = "0x4"; 
+    if (chainId !== rinkebyChainId) {
+      alert("You are not connected to the Rinkeby Test Network!");
     }
-
-
-    //
-
-    // try {
-    //   const { ethereum } = window;
-
-    //   if (ethereum) {
-    //     const provider = new ethers.providers.Web3Provider(ethereum);
-    //     const signer = provider.getSigner();
-    //     const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
-
-    //     let chainId = await ethereum.request({ method: 'eth_chainId' });
-    //       console.log("Connected to chain " + chainId);
-
-    //       // String, hex code of the chainId of the Rinkebey test network
-    //       const rinkebyChainId = "0x4"; 
-    //       if (chainId !== rinkebyChainId) {
-    //         alert("You are not connected to the Rinkeby Test Network!");
-    //       }
-
-    //     connectedContract.on("NewEpicNFTMinted", (from, tokenId) => {
-    //       console.log(from, tokenId.toNumber())
-    //       alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`)
-    //     });
-
-    //     console.log("Going to pop wallet now to pay gas...")
-    //     let nftTxn = await connectedContract.makeAnEpicNFT();
-
-    //     console.log("Mining...please wait.")
-    //     await nftTxn.wait();
-        
-    //     console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-
-    //   } else {
-    //     console.log("Ethereum object doesn't exist!");
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    //
+    console.log("connectedContract");
+    console.log(signer);
+    let nftTxn = await connectedContract.mint(100);
+    console.log("Mining...please wait.")
+    await nftTxn.wait();
+    console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+  }
 }
 
 
-const askContractToStake = () => {
+const askContractToStake = async () => {
   console.log("Stake button pressed");
+  const Gallery_CONTRACT_ADDRESS = "0x4440bFea8Aac55EcFdDe69e9B4d830d0Da4a973D";
+  // const Gallery_CONTRACT_ADDRESS = "0x4AB38c6667B24D5fE11FE0D71F3BeEb34db80859";
+  const { ethereum } = window;
+
+  if (ethereum) {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+
+
+    const connectedContract = new ethers.Contract(Gallery_CONTRACT_ADDRESS, Gallery.abi, signer);
+    
+  
+
+    let chainId = await ethereum.request({ method: 'eth_chainId' });
+    console.log("Connected to chain " + chainId);
+
+    // String, hex code of the chainId of the Rinkebey test network
+    const rinkebyChainId = "0x4"; 
+    if (chainId !== rinkebyChainId) {
+      alert("You are not connected to the Rinkeby Test Network!");
+      return;
+    }
+    ////
+
+    try {
+      setBtnBusy(true);
+      let tokenIds = [1, 2, 3, 4, 5];
+      
+            const accounts = await signer.getAddress();  
+            // const accounts = await ethereum.request({ method: 'eth_accounts' });
+            console.log(tokenIds);
+            console.log(accounts);
+            let nftTxn = await connectedContract.addToGallery(accounts, tokenIds);
+
+            console.log("Staking...please wait.");
+            await nftTxn.wait();
+
+            console.log(`staked, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+            
+      // reset inputs
+      setName("");
+      setDescription("");
+      setSelectedFile(null);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setBtnBusy(false);
+    }
+  }
+
+}
+
+const askContractToReward = async () => {
+  
 }
 
   // Render Methods
@@ -252,11 +287,11 @@ const askContractToStake = () => {
               className="cta-button"
               type="file"
               onChange={(e) => setSelectedFile(e.target.files[0])}
-            />
+            /> */}
             <br/>
             <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
               Mint NFT
-            </button> */}
+            </button>
             </>
           )}
         </div>
@@ -269,10 +304,8 @@ const askContractToStake = () => {
 
 
         <div className="body-container">
-          <button className="cta-button connect-wallet-button">
-            <a  className="cta-button connect-wallet-button"
-            target = "_blank"
-            href = "https://rinkeby.etherscan.io/address/0x5aE69D155f3D1FAeecb35A51703bBc4B445b6a2E" >View transaction</a>
+          <button onClick={askContractToReward} className="cta-button connect-wallet-button">
+            Reward
           </button>
         </div>
         <div className="footer-container">
